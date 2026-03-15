@@ -1,18 +1,13 @@
-# Stage 1: Build
-FROM gradle:8.12-jdk17 AS build
-COPY --chown=gradle:gradle . /home/gradle/src
-WORKDIR /home/gradle/src
-
-# Lowering -Xmx to 256m to stay safely under the 512m limit
-RUN gradle bootJar --no-daemon -x test \
-    -Dorg.gradle.jvmargs="-Xmx256m -XX:MaxMetaspaceSize=128m" \
-    -Dspring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-
-# Stage 2: Run
+# Use a lightweight Java runtime
 FROM eclipse-temurin:17-jre-jammy
-WORKDIR /app
-COPY --from=build /home/gradle/src/build/libs/*.jar app.jar
 
+WORKDIR /app
+
+# Copy the JAR you built locally into the Docker image
+COPY deploy/app.jar app.jar
+
+# Expose the port Spring Boot uses
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-Xmx300m", "-jar", "app.jar"]
+# Run the app with a safe memory limit for Render
+ENTRYPOINT ["java", "-Xmx384m", "-jar", "app.jar"]
