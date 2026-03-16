@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Table
 import jakarta.persistence.Id
+import java.time.LocalDate
 
 @Entity
 @Table(name = "mood_logs")
@@ -19,5 +20,5 @@ class MoodLog(
     val timeOfDay: String, // "MORNING", "EVENING", "NIGHT"
 
     @Column(name = "log_date")
-    val logDate: java.time.LocalDate = java.time.LocalDate.now()
+    val logDate: LocalDate = LocalDate.now()
 )
