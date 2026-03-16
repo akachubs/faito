@@ -12,6 +12,6 @@ class UserDailyTask(
     val taskId: Int,
     var completed: Boolean = false,
     val assignedDate: LocalDate = LocalDate.now(),
-    @Column(columnDefinition = "TEXT") // Use TEXT for descriptions
-    val taskDescription: String // ADDED 'val' HERE
+    taskDescription: String
+
 )
