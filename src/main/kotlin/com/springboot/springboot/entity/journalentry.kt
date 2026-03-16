@@ -17,6 +17,7 @@ class JournalEntry(
     val userId: Int,
 
     @JsonProperty("content")
+    @Column(columnDefinition = "TEXT")
     var content: String,
 
     @Column(name = "created_at")
