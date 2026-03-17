@@ -145,12 +145,11 @@ class MentalHealthController(
         }
     }
     @GetMapping("/mood/summary/{userId}")
-    fun getSummary(@PathVariable userId: Int): Map<String, Any> {
-        val today = LocalDate.now()
-        val thirtyDaysAgo = today.minusDays(30)
+    fun getSummary(@PathVariable userId: Int, @RequestParam date: String): Map<String, Any> {
+        val localDate = LocalDate.parse(date)
+        val thirtyDaysAgo = localDate.minusDays(30)
 
-        // Capture the raw results WITHOUT the ?: 0.0 yet
-        val dailyRaw = repository.getDailyWeightedRawScore(userId, today)
+        val dailyRaw = repository.getDailyWeightedRawScore(userId, localDate)
         val monthlyRaw = repository.getMonthlyWeightedRawScore(userId, thirtyDaysAgo)
 
         // Handle Daily Percentage
