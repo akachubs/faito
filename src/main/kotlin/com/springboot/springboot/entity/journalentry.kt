@@ -16,6 +16,6 @@ class JournalEntry(
     @JsonProperty("content")
     var content: String,
 
-    @Column(name = "created_at")
-    var createdAt: java.sql.Timestamp? = java.sql.Timestamp(System.currentTimeMillis())
+    @Column(name = "created_at", insertable = false, updatable = false)
+    val createdAt: java.sql.Timestamp? = null
 )
