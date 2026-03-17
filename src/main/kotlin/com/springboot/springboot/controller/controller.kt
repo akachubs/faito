@@ -62,8 +62,9 @@ class MentalHealthController(
         return userDailyTaskRepository.saveAll(newAssignments)
     }
 
-    @PutMapping("/tasks/toggle/{id}")
-    fun toggleTask(@PathVariable id: Int, @RequestParam completed: Boolean): UserDailyTask {
+    @PutMapping("/tasks/toggle/{id}/{userId}")
+    fun toggleTask(@PathVariable id: Int,@PathVariable userId: Int,
+        @RequestParam completed: Boolean): UserDailyTask {
         val task = userDailyTaskRepository.findById(id).orElseThrow { RuntimeException("Task not found") }
         task.completed = completed
         return userDailyTaskRepository.save(task)
