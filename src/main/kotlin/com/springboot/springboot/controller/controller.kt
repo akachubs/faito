@@ -54,7 +54,6 @@ class MentalHealthController(
             UserDailyTask(
                 userId = userId,
                 taskId = libraryTask.id,
-                taskDescription = libraryTask.taskDescription,
                 completed = false,
                 assignedDate = today
             )
@@ -104,8 +103,6 @@ class MentalHealthController(
 
         existing.content = entry.content
 
-        // forces the date and time to update to 'now'
-        existing.createdAt = java.sql.Timestamp(System.currentTimeMillis())
 
         return ResponseEntity.ok(journalRepository.save(existing))
     }
